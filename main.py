@@ -1,8 +1,10 @@
-from _ml import MLAgent, train, save, load, train_and_plot
+from _ml import MLAgent, train, save, load, train_and_plot, RandomAgent, validate, plot_validation
 from _core import is_winner, opponent, start
  
 
 
+ 
+ 
 class MyAgent(MLAgent):
     def evaluate(self, board):
         if is_winner(board, self.symbol):
@@ -14,13 +16,11 @@ class MyAgent(MLAgent):
         return reward
     
  
-my_agent = MyAgent()
+my_agent = load('MyAgent_3000')
+my_agent.learning = True
  
-train(my_agent, 3000)
+validation_agent = RandomAgent()
  
-save(my_agent, 'MyAgent_3000')
-
-# # zet de onderstaande regel aan aan om de agent te stoppen met leren en alleen de beste zetten te gebruiken
-my_agent.learning = False
-
-start(player_x=my_agent)
+validation_result = validate(agent_x=my_agent, agent_o=validation_agent, iterations=100)
+ 
+plot_validation(validation_result)
