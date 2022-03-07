@@ -3,9 +3,6 @@ from _core import is_winner, opponent, start
 import random
  
 
-
- 
- 
 class MyAgent(MLAgent):
   def evaluate(self, board):
     if is_winner(board, self.symbol):
@@ -15,6 +12,25 @@ class MyAgent(MLAgent):
     else:
       reward = 0
     return reward
+
+def hyperparameters():
+  print("Bij een machine-learning agent kan het gedrag aangepast worden door middel van parameters te gebruiken. In het aangeleverde stukje code van Fundament zijn hiervoor al twee hyperparameters gebruikt; Alpha en Epsilon \nEpsilon bepaalt de frequentie waarmee de agent een nieuwe zet zal proberen te maken. De waarde ligt, net zoals bij Alpha, tussen de 0 en de 1. Hoe hoger het Epsilon getal is, bepaald de randomness van een zet. Dichterbij de 0 geeft bekendere zetten, dichterbij de 1 geeft meer random zetten. \nAlpha als parameter bepaalt de snelheid waarmee de agent nieuwe kennis vergaart. Oude kennis wordt sneller vervangen door de nieuwere kennis indien deze Alpha waarde dichterbij de 1 ligt.")
+  while True:
+    try:
+      Epsilonwaarde = float(input("epsilon: \n"))
+      Alphawaarde = float(input("alpha: \n"))
+      
+    except:
+      print("Neem een waarde tussen de 1 en de 0")
+      continue
+    else:
+      if Alphawaarde <= 1 and Epsilonwaarde <= 1:
+        break
+      else:
+        print("Neem een waarde tussen de 1 en de 0")
+  
+  my_agent = MyAgent(alpha=Alphawaarde, epsilon=Epsilonwaarde)
+  return my_agent
 
 def Spelen():
 
@@ -55,33 +71,38 @@ def Agenttrainen():
   print("Opgeslagen onder" + naam)
 
 
-def hyperparameters():
-  print("Bij een machine-learning agent kan het gedrag aangepast worden door middel van parameters te gebruiken. In het aangeleverde stukje code van Fundament zijn hiervoor al twee hyperparameters gebruikt; Alpha en Epsilon \nEpsilon bepaalt de frequentie waarmee de agent een nieuwe zet zal proberen te maken. De waarde ligt, net zoals bij Alpha, tussen de 0 en de 1. Hoe hoger het Epsilon getal is, bepaald de randomness van een zet. Dichterbij de 0 geeft bekendere zetten, dichterbij de 1 geeft meer random zetten. \nAlpha als parameter bepaalt de snelheid waarmee de agent nieuwe kennis vergaart. Oude kennis wordt sneller vervangen door de nieuwere kennis indien deze Alpha waarde dichterbij de 1 ligt.")
-  while True:
-    try:
-      Epsilonwaarde = float(input("epsilon: \n"))
-      Alphawaarde = float(input("alpha: \n"))
-      
-    except:
-      print("Neem een waarde tussen de 1 en de 0")
-      continue
-    else:
-      if Alphawaarde <= 1 and Epsilonwaarde <= 1:
-        break
-      else:
-        print("Neem een waarde tussen de 1 en de 0")
-  
-  my_agent = MyAgent(alpha=Alphawaarde, epsilon=Epsilonwaarde)
-  return my_agent
+
 
 def Grafiek():
+  print("Als de grafiek getekend is, klik het weg om verder te gaan")
+
+  random.seed(1)
+
+  while True:
+    try:
+      itterate = int(input("How many itterations doe you want to do (max 50) \n"))
+    except:
+      print("kies een getal graag")
+      continue
+    else:
+      if itterate <= 50:
+        break
+
+  random_agent = RandomAgent()
+  my_agent = hyperparameters()
+ 
+  train_and_plot(
+    agent=my_agent,
+    validation_agent=random_agent,
+    iterations=itterate,
+    trainings=100,
+    validations=1000)
 
 
-
-
+#Test
   
 while True:
-  keuzemenu = input("Kies hier wat je wilt spelen")
+  keuzemenu = input("Kies hier wat je wilt spelen \n")
   
   if keuzemenu == '1':
     start()
@@ -89,6 +110,8 @@ while True:
     Agenttrainen()
   if keuzemenu == '3':
     Spelen()
+  if keuzemenu == '4':
+    Grafiek()
 
   play = input("Spel afsluiten? (ja/nee) \n")
   if play == 'nee':
