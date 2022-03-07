@@ -45,15 +45,44 @@ def Spelen():
 
 def Agenttrainen():
   naam = input("Typ hier de naam van je agent")
+
+  my_agent = hyperparameters()
   
   train(my_agent, 5000)
 
   save(my_agent, naam)
 
+  print("Opgeslagen onder" + naam)
 
 
+def hyperparameters():
+  print("Bij een machine-learning agent kan het gedrag aangepast worden door middel van parameters te gebruiken. In het aangeleverde stukje code van Fundament zijn hiervoor al twee hyperparameters gebruikt; Alpha en Epsilon \nEpsilon bepaalt de frequentie waarmee de agent een nieuwe zet zal proberen te maken. De waarde ligt, net zoals bij Alpha, tussen de 0 en de 1. Hoe hoger het Epsilon getal is, bepaald de randomness van een zet. Dichterbij de 0 geeft bekendere zetten, dichterbij de 1 geeft meer random zetten. \nAlpha als parameter bepaalt de snelheid waarmee de agent nieuwe kennis vergaart. Oude kennis wordt sneller vervangen door de nieuwere kennis indien deze Alpha waarde dichterbij de 1 ligt.")
+  while True:
+    try:
+      Epsilonwaarde = float(input("epsilon: \n"))
+      Alphawaarde = float(input("alpha: \n"))
+      
+    except:
+      print("Neem een waarde tussen de 1 en de 0")
+      continue
+    else:
+      if Alphawaarde <= 1 and Epsilonwaarde <= 1:
+        break
+      else:
+        print("Neem een waarde tussen de 1 en de 0")
+  
+  my_agent = MyAgent(alpha=Alphawaarde, epsilon=Epsilonwaarde)
+  return my_agent
+
+def Grafiek():
+
+
+
+
+  
 while True:
   keuzemenu = input("Kies hier wat je wilt spelen")
+  
   if keuzemenu == '1':
     start()
   if keuzemenu == '2':
@@ -67,5 +96,3 @@ while True:
   else:
     break
     
-def hyperparameters():
-  print("Bij een machine-learning agent kan het gedrag aangepast worden door middel van parameters te gebruiken. In het aangeleverde stukje code van Fundament zijn hiervoor al twee hyperparameters gebruikt; Alpha en Epsilon \nEpsilon bepaalt de frequentie waarmee de agent een nieuwe zet zal proberen te maken. De waarde ligt, net zoals bij Alpha, tussen de 0 en de 1. Hoe hoger het Epsilon getal is, bepaald de randomness van een zet. Dichterbij de 0 geeft bekendere zetten, dichterbij de 1 geeft meer random zetten. \nAlpha als parameter bepaalt de snelheid waarmee de agent nieuwe kennis vergaart. Oude kennis wordt sneller vervangen door de nieuwere kennis indien deze Alpha waarde dichterbij de 1 ligt.")
