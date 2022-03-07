@@ -18,7 +18,7 @@ class MyAgent(MLAgent):
     
  
 my_agent = load('MyAgent_3000')
-my_agent.learning = True
+my_agent.learning = False
  
 validation_agent = RandomAgent()
  
@@ -29,8 +29,20 @@ plot_validation(validation_result)
 def parameters():
   print("Bij een machine-learning agent kan het gedrag aangepast worden door middel van parameters te gebruiken. In het aangeleverde stukje code van Fundament zijn hiervoor al twee hyperparameters gebruikt; Alpha en Epsilon \nEpsilon bepaalt de frequentie waarmee de agent een nieuwe zet zal proberen te maken. De waarde ligt, net zoals bij Alpha, tussen de 0 en de 1. Hoe hoger het Epsilon getal is, bepaald de randomness van een zet. Dichterbij de 0 geeft bekendere zetten, dichterbij de 1 geeft meer random zetten. \nAlpha als parameter bepaalt de snelheid waarmee de agent nieuwe kennis vergaart. Oude kennis wordt sneller vervangen door de nieuwere kennis indien deze Alpha waarde dichterbij de 1 ligt.")
 
+def Agenttrainen():
+naam = input("Typ hier de naam van je agent")
   
+  train(my_agent, 5000)
 
-  
-  my_agent = MyAgent(alpha=chosen_alpha, epsilon=chosen_epsilon)
-  return my_agent
+  save(my_agent, naam)
+
+
+
+while True:
+  keuzemenu = input("Kies hier wat je wilt spelen")
+  if keuzemenu == '1':
+    start()
+  if keuzemenu == '2':
+    Agenttrainen()
+  if keuzemenu == '3':
+    
