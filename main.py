@@ -17,8 +17,8 @@ def hyperparameters():
   print("Bij een machine-learning agent kan het gedrag aangepast worden door middel van parameters te gebruiken. In het aangeleverde stukje code van Fundament zijn hiervoor al twee hyperparameters gebruikt; Alpha en Epsilon \nEpsilon bepaalt de frequentie waarmee de agent een nieuwe zet zal proberen te maken. De waarde ligt, net zoals bij Alpha, tussen de 0 en de 1. Hoe hoger het Epsilon getal is, bepaald de randomness van een zet. Dichterbij de 0 geeft bekendere zetten, dichterbij de 1 geeft meer random zetten. \nAlpha als parameter bepaalt de snelheid waarmee de agent nieuwe kennis vergaart. Oude kennis wordt sneller vervangen door de nieuwere kennis indien deze Alpha waarde dichterbij de 1 ligt.")
   while True:
     try:
-      Epsilonwaarde = float(input("epsilon: \n"))
-      Alphawaarde = float(input("alpha: \n"))
+      Epsilonwaarde = float(input("Epsilon: \n"))
+      Alphawaarde = float(input("Alpha: \n"))
       
     except:
       print("Neem een waarde tussen de 1 en de 0")
@@ -35,7 +35,7 @@ def hyperparameters():
 def Spelen():
 
   while True:
-    play_agent = input("vul de naam in van de agent waar tegen jij wilt spelen")
+    play_agent = input("Vul de naam in van de agent waar tegen jij wilt spelen \n")
     try:
       my_agent = load(play_agent)
     except:
@@ -60,7 +60,7 @@ def Spelen():
 
 
 def Agenttrainen():
-  naam = input("Typ hier de naam van je agent")
+  naam = input("Typ hier de naam van je agent \n")
 
   my_agent = hyperparameters()
   
@@ -71,18 +71,45 @@ def Agenttrainen():
   print("Opgeslagen onder" + naam)
 
 
-
-
 def Grafiek():
   print("Als de grafiek getekend is, klik het weg om verder te gaan")
 
+  while True:
+    try:
+      naam = input("Hoe heet de agent \n")
+      my_agent = load(naam)
+    except:
+      print("deze agent bestaat niet")
+      continue
+    else:
+      my_agent = load(naam)
+      break
+      
+  while True:
+    symbol = input("Wil je dat jouw agent x of o is? (x begint altijd) \n")
+    if symbol == "O" or symbol == "X":
+      break
+  
+  my_agent.learning = False
+ 
+  validation_agent = RandomAgent()
+
+  if symbol == "X":
+    validation_result = validate(agent_x=my_agent, agent_o=validation_agent, iterations=100)
+
+  if symbol == "O":
+    validation_result = validate(agent_o=my_agent, agent_x=validation_agent, iterations=100)
+
+  plot_validation(validation_result)
+
+def Vergelijking():
   random.seed(1)
 
   while True:
     try:
-      itterate = int(input("How many itterations doe you want to do (max 50) \n"))
+      itterate = int(input("Hoeveel iteraties tussen de 1 en 50 wil je gebruiken? \n"))
     except:
-      print("kies een getal graag")
+      print("Een getal tussen 1 en 50!")
       continue
     else:
       if itterate <= 50:
@@ -97,7 +124,8 @@ def Grafiek():
     iterations=itterate,
     trainings=100,
     validations=1000)
-
+  
+  print("Om naar het menu te gaan klik je op het kruisje rechtsbovenin")
 
 #Test
   
@@ -112,6 +140,8 @@ while True:
     Spelen()
   if keuzemenu == '4':
     Grafiek()
+  if keuzemenu == '5':
+    Vergelijking()
 
   play = input("Spel afsluiten? (ja/nee) \n")
   if play == 'nee':
